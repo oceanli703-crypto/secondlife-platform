@@ -1,8 +1,9 @@
 {
+  "name": "secondlife-platform",
   "version": 2,
   "builds": [
     {
-      "src": "frontend/**",
+      "src": "frontend/index.html",
       "use": "@vercel/static"
     }
   ],
