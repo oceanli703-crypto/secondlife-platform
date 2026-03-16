@@ -349,10 +349,8 @@
 
     <script>
         // ==================== 配置 ====================
-        // 自动检测环境：本地开发 vs 生产环境
-        const API_BASE = window.location.hostname === 'localhost' 
-            ? 'http://localhost:8000' 
-            : 'https://secondlife-api.onrender.com';
+        // 生产环境使用Render后端
+        const API_BASE = 'https://secondlife-api.onrender.com';
         
         // ==================== 状态管理 ====================
         let currentUser = null;
