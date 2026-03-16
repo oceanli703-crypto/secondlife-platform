@@ -1,0 +1,16 @@
+# Render 部署配置
+# 免费托管 FastAPI + SQLite
+
+services:
+  - type: web
+    name: secondlife-api
+    runtime: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "uvicorn app.main:app --host 0.0.0.0 --port $PORT"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: SECRET_KEY
+        generateValue: true
+    plan: free
+    # 自动休眠：15分钟无访问会休眠，下次访问约30秒唤醒
