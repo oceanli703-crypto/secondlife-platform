@@ -18,6 +18,13 @@ import secrets
 import re
 import os
 from pydantic import BaseModel, Field, EmailStr, validator
+from typing import Optional, List
+
+# Pydantic v1 兼容导入
+try:
+    from pydantic import validator as pydantic_validator
+except ImportError:
+    from pydantic import validator as pydantic_validator
 
 import html
 
