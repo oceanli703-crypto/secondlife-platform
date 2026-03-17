@@ -316,7 +316,7 @@ class Escrow(Base):
     
     amount = Column(Float, nullable=False)
     currency = Column(String(10), default="CNY")
-    status = Column(Enum(EscrowStatus), default=EscrowStatus.PENDING)
+    status = Column(Enum(EscrowStatus), default=EscrowStatus.NOT_CREATED)
     
     # 支付信息
     payment_method = Column(String(50), nullable=True)

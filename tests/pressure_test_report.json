@@ -1,0 +1,19 @@
+{
+  "timestamp": "2026-03-17T07:45:15.670182",
+  "target": "https://secondlife-platform.onrender.com",
+  "config": {
+    "concurrent": 100,
+    "total": 1000
+  },
+  "results": {
+    "success": 1000,
+    "failed": 0,
+    "success_rate": 100.0,
+    "total_time": 17.036484956741333,
+    "rps": 58.69755425131287,
+    "avg_response_time": 1.5090838372707367,
+    "min_response_time": 0.6711034774780273,
+    "max_response_time": 2.952462911605835
+  },
+  "status": "PASS"
+}
