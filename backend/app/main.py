@@ -70,6 +70,20 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# 安全响应头中间件
+@app.middleware("http")
+async def security_headers_middleware(request: Request, call_next):
+    response = await call_next(request)
+    # XSS防护
+    response.headers["X-XSS-Protection"] = "1; mode=block"
+    # 内容类型嗅探防护
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    # 点击劫持防护
+    response.headers["X-Frame-Options"] = "DENY"
+    # CSP策略
+    response.headers["Content-Security-Policy"] = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'"
+    return response
+
 # ==================== 依赖 ====================
 
 def get_db():
@@ -90,15 +104,18 @@ async def get_current_user(
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         user_id = payload.get("sub")
         if user_id is None:
-            raise HTTPException(status_code=401, detail="无效的认证令牌")
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="无效的认证令牌")
     except jwt.ExpiredSignatureError:
-        raise HTTPException(status_code=401, detail="认证令牌已过期")
-    except jwt.JWTError:
-        raise HTTPException(status_code=401, detail="无效的认证令牌")
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="认证令牌已过期")
+    except jwt.InvalidTokenError:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="无效的认证令牌")
+    except Exception:
+        # 捕获任何其他异常，确保返回401而不是500
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="无效的认证令牌")
     
     user = db.query(User).filter(User.id == user_id).first()
     if user is None or not user.is_active:
-        raise HTTPException(status_code=401, detail="用户不存在或已被禁用")
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="用户不存在或已被禁用")
     
     return user
 

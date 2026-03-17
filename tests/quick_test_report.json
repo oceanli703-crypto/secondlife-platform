@@ -1,0 +1,55 @@
+{
+  "timestamp": "2026-03-17T06:44:14.766137",
+  "target": "https://secondlife-platform.onrender.com",
+  "summary": {
+    "passed": 7,
+    "total": 9
+  },
+  "results": [
+    {
+      "name": "Health Endpoint",
+      "passed": true,
+      "severity": "high"
+    },
+    {
+      "name": "Auth on /api/user/profile",
+      "passed": true,
+      "severity": "high"
+    },
+    {
+      "name": "Auth on /api/tasks",
+      "passed": true,
+      "severity": "high"
+    },
+    {
+      "name": "Invalid Token Rejected",
+      "passed": false,
+      "severity": "high"
+    },
+    {
+      "name": "API Root Accessible",
+      "passed": true,
+      "severity": "info"
+    },
+    {
+      "name": "Security Headers Present",
+      "passed": false,
+      "severity": "medium"
+    },
+    {
+      "name": "Registration Endpoint",
+      "passed": true,
+      "severity": "high"
+    },
+    {
+      "name": "Login Endpoint",
+      "passed": true,
+      "severity": "high"
+    },
+    {
+      "name": "Token Generated",
+      "passed": true,
+      "severity": "high"
+    }
+  ]
+}
