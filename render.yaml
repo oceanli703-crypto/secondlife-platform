@@ -1,23 +1,15 @@
-# Render部署配置 - 最终修复版
+# Render Docker部署配置
 services:
   - type: web
     name: secondlife-api
-    runtime: python
+    runtime: docker
     repo: https://github.com/oceanli703-crypto/secondlife-platform
     branch: main
-    rootDir: backend
-    buildCommand: |
-      pip install --upgrade pip setuptools wheel
-      pip install -r requirements.txt
-    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT --workers 1
+    dockerfilePath: ./backend/Dockerfile
     envVars:
-      - key: PYTHON_VERSION
-        value: 3.11.11
       - key: SECRET_KEY
         generateValue: true
       - key: DATABASE_URL
         value: sqlite:///./secondlife.db
-      - key: PYTHONPATH
-        value: /opt/render/project/src/backend
     plan: free
     healthCheckPath: /health
