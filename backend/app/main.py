@@ -380,7 +380,7 @@ async def get_task_detail(
     }
     
     if permission["can_view_full"] or is_participant:
-        response["description"] = encryption_service.decrypt(task.description_encrypted)
+        response["description"] = escape_html(encryption_service.decrypt(task.description_encrypted))
         response["requirements"] = task.requirements_encrypted
     else:
         response["unlock_requirements"] = permission.get("unlock_requirements", {})
@@ -513,8 +513,8 @@ async def get_messages(
         result.append({
             "id": msg.id,
             "sender": sender_display,
-            "content": encryption_service.decrypt(msg.content_encrypted),
-            "masked_content": msg.masked_content,
+            "content": escape_html(encryption_service.decrypt(msg.content_encrypted)),
+            "masked_content": escape_html(msg.masked_content) if msg.masked_content else None,
             "has_sensitive_info": msg.has_sensitive_info,
             "created_at": msg.created_at.isoformat()
         })

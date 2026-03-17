@@ -1,0 +1,65 @@
+[
+  {
+    "id": "TEST-001",
+    "name": "重复发布任务攻击",
+    "level": "HIGH",
+    "status": "PASS",
+    "detail": "防护正常：仅0个任务成功"
+  },
+  {
+    "id": "TEST-002",
+    "name": "自发自接资金套取",
+    "level": "HIGH",
+    "status": "ERROR",
+    "detail": "任务发布失败"
+  },
+  {
+    "id": "TEST-003",
+    "name": "并发接单竞争测试",
+    "level": "HIGH",
+    "status": "ERROR",
+    "detail": "任务发布失败"
+  },
+  {
+    "id": "TEST-004",
+    "name": "认证绕过测试",
+    "level": "MEDIUM",
+    "status": "PASS",
+    "detail": "返回403"
+  },
+  {
+    "id": "TEST-005",
+    "name": "SQL注入测试",
+    "level": "CRITICAL",
+    "status": "FAIL",
+    "detail": "发现SQL注入漏洞！"
+  },
+  {
+    "id": "TEST-006",
+    "name": "XSS攻击测试",
+    "level": "CRITICAL",
+    "status": "FAIL",
+    "detail": "XSS payload未转义！"
+  },
+  {
+    "id": "TEST-007",
+    "name": "压力测试-100并发",
+    "level": "MEDIUM",
+    "status": "PASS",
+    "detail": "成功率100.0%, 平均响应1.92s"
+  },
+  {
+    "id": "TEST-008",
+    "name": "暴力破解防护",
+    "level": "MEDIUM",
+    "status": "WARNING",
+    "detail": "5次错误后仍可登录，建议添加速率限制"
+  },
+  {
+    "id": "TEST-009",
+    "name": "水平越权测试",
+    "level": "MEDIUM",
+    "status": "ERROR",
+    "detail": "任务创建失败"
+  }
+]
