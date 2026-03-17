@@ -3,129 +3,782 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>第二人生 | Second Life - 高端任务众包平台</title>
-    <meta name="deployment-check" content="redeploy-2026-03-17">
+    <title>第二人生 | Second Life</title>
+    <meta name="description" content="高端任务众包平台">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <style>
+        /* ========== 设计系统 - 乔布斯式极简 ========== */
         :root {
-            --primary: #1a1a2e;
-            --secondary: #16213e;
+            /* 色彩 - 只有4种 */
+            --bg-primary: #000000;
+            --bg-secondary: #1a1a1a;
+            --bg-tertiary: #2a2a2a;
+            --text-primary: #ffffff;
+            --text-secondary: #86868b;
+            --text-tertiary: #6e6e73;
             --accent: #e94560;
-            --accent-light: #ff6b6b;
-            --gold: #d4af37;
-            --text: #f5f5f5;
-            --text-dim: #a0a0a0;
-            --success: #4caf50;
-            --glass: rgba(255, 255, 255, 0.05);
-            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent-hover: #ff6b7a;
+            
+            /* 字体 */
+            --font-stack: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', 'PingFang SC', sans-serif;
+            
+            /* 间距系统 */
+            --space-xs: 8px;
+            --space-sm: 16px;
+            --space-md: 24px;
+            --space-lg: 48px;
+            --space-xl: 80px;
+            --space-2xl: 120px;
+            
+            /* 圆角 */
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+            --radius-full: 9999px;
         }
         
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: var(--text);
+            font-family: var(--font-stack);
+            background: var(--bg-primary);
+            color: var(--text-primary);
             min-height: 100vh;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        /* ========== 字体系统 ========== */
+        .text-hero {
+            font-size: 80px;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+        }
+        
+        .text-headline {
+            font-size: 48px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+        
+        .text-title {
+            font-size: 28px;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+        }
+        
+        .text-body {
+            font-size: 17px;
+            font-weight: 400;
+            line-height: 1.5;
+        }
+        
+        .text-caption {
+            font-size: 14px;
+            font-weight: 400;
+            color: var(--text-secondary);
+        }
+        
+        .text-small {
+            font-size: 12px;
+            font-weight: 400;
+            color: var(--text-tertiary);
+        }
+        
+        /* ========== 导航栏 ========== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 0 5%;
+            height: 52px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+        
+        .logo-icon {
+            width: 28px;
+            height: 28px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+        }
+        
+        .logo-text {
+            font-size: 21px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 400;
+            transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+        
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+        
+        .nav-actions {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+        
+        /* ========== 按钮系统 ========== */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 24px;
+            border: none;
+            border-radius: var(--radius-full);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+        }
+        
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+            box-shadow: 0 4px 16px rgba(233, 69, 96, 0.3);
+        }
+        
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            transform: scale(1.04);
+            box-shadow: 0 6px 20px rgba(233, 69, 96, 0.4);
+        }
+        
+        .btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--bg-tertiary);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .btn-ghost {
+            background: transparent;
+            color: var(--accent);
+            padding: 12px 0;
+        }
+        
+        .btn-ghost:hover {
+            color: var(--accent-hover);
+        }
+        
+        .btn-large {
+            padding: 16px 32px;
+            font-size: 17px;
+        }
+        
+        /* ========== 页面容器 ========== */
+        .page {
+            display: none;
+            padding-top: 52px;
+            min-height: 100vh;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        /* ========== Hero区域 ========== */
+        .hero {
+            min-height: calc(100vh - 52px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: var(--space-2xl) 5%;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--bg-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 8px 16px;
+            border-radius: var(--radius-full);
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: var(--space-lg);
+        }
+        
+        .hero-badge .dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .hero h1 {
+            margin-bottom: var(--space-md);
+        }
+        
+        .hero-subtitle {
+            color: var(--text-secondary);
+            margin-bottom: var(--space-xl);
+            max-width: 600px;
+        }
+        
+        .hero-actions {
+            display: flex;
+            gap: var(--space-md);
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        /* ========== 功能展示卡片 ========== */
+        .features {
+            padding: var(--space-2xl) 5%;
+            background: var(--bg-secondary);
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: var(--space-xl);
+        }
+        
+        .section-header h2 {
+            margin-bottom: var(--space-sm);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--space-md);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .feature-card {
+            background: var(--bg-primary);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-4px);
+        }
+        
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: var(--space-md);
+        }
+        
+        .feature-card h3 {
+            margin-bottom: var(--space-xs);
+        }
+        
+        .feature-card p {
+            color: var(--text-secondary);
+        }
+        
+        /* ========== 任务列表 ========== */
+        .tasks-section {
+            padding: var(--space-2xl) 5%;
+        }
+        
+        .task-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            gap: var(--space-md);
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .task-card {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            border: 1px solid transparent;
+        }
+        
+        .task-card:hover {
+            border-color: rgba(233, 69, 96, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .task-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: var(--space-sm);
+        }
+        
+        .task-title {
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .task-category {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .task-budget {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+        
+        .task-summary {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: var(--space-md);
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .task-meta {
+            display: flex;
+            gap: var(--space-md);
+            font-size: 13px;
+            color: var(--text-tertiary);
+        }
+        
+        .task-meta span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .visibility-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 10px;
+            background: rgba(233, 69, 96, 0.1);
+            border-radius: var(--radius-full);
+            font-size: 12px;
+            color: var(--accent);
+            font-weight: 500;
+        }
+        
+        /* ========== 表单 ========== */
+        .form-section {
+            padding: var(--space-2xl) 5%;
+            min-height: calc(100vh - 52px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .form-container {
+            width: 100%;
+            max-width: 480px;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+        }
+        
+        .form-header {
+            text-align: center;
+            margin-bottom: var(--space-lg);
+        }
+        
+        .form-group {
+            margin-bottom: var(--space-md);
+        }
+        
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 14px 16px;
+            background: var(--bg-primary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            font-size: 16px;
+            font-family: inherit;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(233, 69, 96, 0.1);
+        }
+        
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: var(--text-tertiary);
+        }
+        
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-md);
+        }
+        
+        .form-hint {
+            font-size: 13px;
+            color: var(--text-tertiary);
+            margin-top: 6px;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+        
+        .checkbox-group input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--accent);
+        }
+        
+        .form-footer {
+            text-align: center;
+            margin-top: var(--space-lg);
+            padding-top: var(--space-lg);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .form-footer a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .form-footer a:hover {
+            text-decoration: underline;
+        }
+        
+        /* ========== 关于页面 ========== */
+        .about-section {
+            padding: var(--space-2xl) 5%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .about-section h2 {
+            margin-bottom: var(--space-md);
+        }
+        
+        .about-section p {
+            color: var(--text-secondary);
+            margin-bottom: var(--space-md);
+            font-size: 17px;
             line-height: 1.6;
         }
         
-        .navbar {
-            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-            background: rgba(26, 26, 46, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--glass-border);
-            padding: 1rem 5%;
-            display: flex; justify-content: space-between; align-items: center;
+        /* ========== 加载动画 ========== */
+        .loading {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
         }
         
-        .logo { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; color: var(--text); }
-        .logo-icon { width: 40px; height: 40px; background: linear-gradient(135deg, var(--accent), var(--gold)); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.2rem; }
-        .logo-text { font-size: 1.5rem; font-weight: 700; }
-        .logo-text span { color: var(--gold); }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
         
-        .nav-links { display: flex; gap: 2rem; list-style: none; }
-        .nav-links a { color: var(--text-dim); text-decoration: none; transition: color 0.3s; font-weight: 500; cursor: pointer; }
-        .nav-links a:hover { color: var(--text); }
+        /* ========== Toast通知 ========== */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            padding: 16px 24px;
+            background: var(--bg-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-md);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            transform: translateX(400px);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 3000;
+            max-width: 400px;
+        }
         
-        .nav-actions { display: flex; gap: 1rem; align-items: center; }
-        .btn { padding: 0.6rem 1.5rem; border: none; border-radius: 8px; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: all 0.3s; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; }
-        .btn-outline { background: transparent; border: 1px solid var(--glass-border); color: var(--text); }
-        .btn-outline:hover { background: var(--glass); border-color: var(--accent); }
-        .btn-primary { background: linear-gradient(135deg, var(--accent), var(--accent-light)); color: white; }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(233, 69, 96, 0.3); }
-        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .toast.show {
+            transform: translateX(0);
+        }
         
-        #user-info { color: var(--gold); font-size: 0.9rem; }
+        .toast.success {
+            border-left: 4px solid #34c759;
+        }
         
-        .page { display: none; padding-top: 80px; min-height: 100vh; }
-        .page.active { display: block; }
+        .toast.error {
+            border-left: 4px solid var(--accent);
+        }
         
-        .hero { min-height: calc(100vh - 80px); display: flex; align-items: center; justify-content: center; padding: 4rem 5%; position: relative; overflow: hidden; }
-        .hero-content { text-align: center; max-width: 900px; }
-        .hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--glass); border: 1px solid var(--glass-border); padding: 0.5rem 1rem; border-radius: 50px; font-size: 0.875rem; color: var(--gold); margin-bottom: 2rem; }
-        .hero h1 { font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 800; line-height: 1.2; margin-bottom: 1.5rem; }
-        .hero h1 .highlight { background: linear-gradient(135deg, var(--accent), var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-        .hero p { font-size: 1.25rem; color: var(--text-dim); margin-bottom: 2.5rem; max-width: 600px; margin-left: auto; margin-right: auto; }
+        /* ========== 模态框 ========== */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
         
-        .section { padding: 4rem 5%; }
-        .section-header { text-align: center; margin-bottom: 3rem; }
-        .section-header h2 { font-size: 2rem; margin-bottom: 1rem; }
-        .section-header p { color: var(--text-dim); }
+        .modal.active {
+            display: flex;
+        }
         
-        .task-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 1.5rem; max-width: 1400px; margin: 0 auto; }
-        .task-card { background: var(--glass); border: 1px solid var(--glass-border); border-radius: 12px; padding: 1.5rem; transition: all 0.3s; cursor: pointer; }
-        .task-card:hover { border-color: var(--accent); transform: translateY(-3px); }
-        .task-card h3 { font-size: 1.1rem; margin-bottom: 0.75rem; }
-        .task-meta { display: flex; gap: 1rem; font-size: 0.85rem; color: var(--text-dim); margin-bottom: 1rem; flex-wrap: wrap; }
-        .task-budget { font-size: 1.25rem; font-weight: 700; color: var(--gold); }
-        .visibility-badge { display: inline-block; padding: 0.25rem 0.5rem; background: rgba(212, 175, 55, 0.2); border-radius: 4px; font-size: 0.75rem; color: var(--gold); margin-left: 0.5rem; }
+        .modal-content {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-lg);
+            width: 100%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            animation: modalIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
         
-        .form-container { max-width: 500px; margin: 2rem auto; background: var(--glass); border: 1px solid var(--glass-border); border-radius: 16px; padding: 2rem; }
-        .form-group { margin-bottom: 1.5rem; }
-        .form-group label { display: block; margin-bottom: 0.5rem; font-size: 0.9rem; }
-        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 0.75rem 1rem; background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); border-radius: 8px; color: var(--text); font-size: 1rem; }
-        .form-group input:focus, .form-group textarea:focus, .form-group select:focus { outline: none; border-color: var(--accent); }
-        .form-group textarea { min-height: 120px; resize: vertical; }
+        @keyframes modalIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
         
-        .modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); z-index: 2000; align-items: center; justify-content: center; }
-        .modal.active { display: flex; }
-        .modal-content { background: var(--primary); border: 1px solid var(--glass-border); border-radius: 16px; padding: 2rem; max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto; }
-        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
-        .modal-close { background: none; border: none; color: var(--text-dim); font-size: 1.5rem; cursor: pointer; }
-        .modal-close:hover { color: var(--text); }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--space-lg);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
         
-        .chat-container { display: flex; flex-direction: column; height: 400px; border: 1px solid var(--glass-border); border-radius: 12px; overflow: hidden; }
-        .chat-messages { flex: 1; overflow-y: auto; padding: 1rem; }
-        .chat-message { margin-bottom: 1rem; }
-        .chat-message .sender { font-size: 0.8rem; color: var(--gold); margin-bottom: 0.25rem; }
-        .chat-message .content { background: var(--glass); padding: 0.75rem; border-radius: 8px; }
-        .chat-input { display: flex; padding: 1rem; border-top: 1px solid var(--glass-border); }
-        .chat-input input { flex: 1; background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); border-radius: 8px; padding: 0.75rem; color: var(--text); }
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 24px;
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.2s;
+        }
         
-        .toast { position: fixed; bottom: 2rem; right: 2rem; padding: 1rem 1.5rem; background: var(--glass); border: 1px solid var(--glass-border); border-radius: 8px; backdrop-filter: blur(10px); z-index: 3000; transform: translateX(400px); transition: transform 0.3s; }
-        .toast.show { transform: translateX(0); }
-        .toast.success { border-color: var(--success); }
-        .toast.error { border-color: var(--accent); }
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+        }
         
-        .loading { display: inline-block; width: 20px; height: 20px; border: 2px solid rgba(255,255,255,0.3); border-radius: 50%; border-top-color: var(--accent); animation: spin 1s linear infinite; }
-        @keyframes spin { to { transform: rotate(360deg); } }
+        .modal-body {
+            padding: var(--space-lg);
+        }
         
-        .stats { display: flex; justify-content: center; gap: 3rem; margin-top: 3rem; padding-top: 3rem; border-top: 1px solid var(--glass-border); }
-        .stat-item { text-align: center; }
-        .stat-number { font-size: 2rem; font-weight: 800; color: var(--gold); }
-        .stat-label { color: var(--text-dim); font-size: 0.9rem; }
+        /* ========== 聊天界面 ========== */
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            height: 400px;
+            background: var(--bg-primary);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+        }
         
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: var(--space-md);
+        }
+        
+        .chat-message {
+            margin-bottom: var(--space-md);
+            animation: messageIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        @keyframes messageIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .chat-message .sender {
+            font-size: 12px;
+            color: var(--accent);
+            margin-bottom: 4px;
+            font-weight: 500;
+        }
+        
+        .chat-message .content {
+            background: var(--bg-tertiary);
+            padding: 12px 16px;
+            border-radius: var(--radius-md);
+            font-size: 14px;
+        }
+        
+        .chat-input {
+            display: flex;
+            padding: var(--space-md);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            gap: 12px;
+        }
+        
+        .chat-input input {
+            flex: 1;
+            background: var(--bg-tertiary);
+            border: none;
+            border-radius: var(--radius-full);
+            padding: 12px 20px;
+            color: var(--text-primary);
+            font-size: 14px;
+        }
+        
+        .chat-input input:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(233, 69, 96, 0.3);
+        }
+        
+        /* ========== 响应式 ========== */
         @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .task-grid { grid-template-columns: 1fr; }
+            .text-hero {
+                font-size: 48px;
+            }
+            
+            .text-headline {
+                font-size: 32px;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .hero-actions {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .hero-actions .btn {
+                width: 100%;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .features-grid,
+            .task-grid {
+                grid-template-columns: 1fr;
+            }
         }
+        
+        /* ========== 工具类 ========== */
+        .text-center { text-align: center; }
+        .text-accent { color: var(--accent); }
+        .mt-lg { margin-top: var(--space-lg); }
+        .mb-lg { margin-bottom: var(--space-lg); }
+        .hidden { display: none !important; }
     </style>
 </head>
 <body>
+    <!-- 导航栏 -->
     <nav class="navbar">
         <a href="#" class="logo" onclick="showPage('home')">
-            <div class="logo-icon">SL</div>
-            <div class="logo-text">第二人生 <span>Second Life</span></div>
+            <div class="logo-icon">·</div>
+            <div class="logo-text">第二人生</div>
         </a>
         
         <ul class="nav-links">
@@ -135,7 +788,7 @@
         </ul>
         
         <div class="nav-actions" id="nav-actions">
-            <button class="btn btn-outline" onclick="showPage('login')">登录</button>
+            <button class="btn btn-secondary" onclick="showPage('login')">登录</button>
             <button class="btn btn-primary" onclick="showPage('register')">注册</button>
         </div>
     </nav>
@@ -143,103 +796,121 @@
     <!-- 首页 -->
     <div class="page active" id="page-home">
         <div class="hero">
-            <div class="hero-content">
-                <div class="hero-badge">
-                    <span>🔒</span> 银行级安全保障 · L1-L4分级隐私
-                </div>
-                <h1>
-                    连接企业与精英人才<br>
-                    <span class="highlight">以任务为核心的高端服务平台</span>
-                </h1>
-                <p>在这里，每一份需求都能找到最匹配的专家。基于强信任、极致隐私和高质量交互，实现真正的价值交换。</p>
-                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-                    <button class="btn btn-primary btn-large" onclick="showPage('publish')" style="padding: 1rem 2.5rem; font-size: 1.1rem;">发布任务</button>
-                    <button class="btn btn-outline btn-large" onclick="showPage('tasks')" style="padding: 1rem 2.5rem; font-size: 1.1rem;">浏览机会</button>
-                </div>
-                
-                <div class="stats">
-                    <div class="stat-item">
-                        <div class="stat-number">∞</div>
-                        <div class="stat-label">无限可能</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">L4</div>
-                        <div class="stat-label">最高隐私等级</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">端到端</div>
-                        <div class="stat-label">加密通讯</div>
-                    </div>
-                </div>
+            <div class="hero-badge">
+                <span class="dot"></span>
+                银行级安全保障
+            </div>
+            <h1 class="text-hero">第二人生</h1>
+            <p class="hero-subtitle text-body">高端任务众包平台。连接企业与精英人才，<br>以任务为核心的价值交换网络。</p>
+            <div class="hero-actions">
+                <button class="btn btn-primary btn-large" onclick="showPage('publish')">发布任务</button>
+                <button class="btn btn-secondary btn-large" onclick="showPage('tasks')">浏览机会</button>
             </div>
         </div>
+        
+        <section class="features">
+            <div class="section-header">
+                <h2 class="text-headline">为什么选择我们</h2>
+                <p class="text-caption">强信任 · 极致隐私 · 高质量交互</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3 class="text-title">L1-L4 分级隐私</h3>
+                    <p class="text-caption">从公开到完全匿名，四级隐私保护满足不同场景需求</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💰</div>
+                    <h3 class="text-title">资金托管</h3>
+                    <p class="text-caption">任务完成前资金由平台托管，保障双方权益</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💬</div>
+                    <h3 class="text-title">端到端加密</h3>
+                    <p class="text-caption">所有通讯内容端到端加密，确保商业机密安全</p>
+                </div>
+            </div>
+        </section>
     </div>
 
     <!-- 任务列表 -->
     <div class="page" id="page-tasks">
-        <div class="section">
+        <section class="tasks-section">
             <div class="section-header">
-                <h2>推荐任务</h2>
-                <p>精选优质机会，等待精英接单</p>
+                <h2 class="text-headline">推荐任务</h2>
+                <p class="text-caption">精选优质机会，等待精英接单</p>
             </div>
             <div class="task-grid" id="task-list">
-                <div style="text-align: center; padding: 3rem;"><div class="loading"></div></div>
+                <div style="text-align: center; padding: 80px;">
+                    <div class="loading"></div>
+                </div>
             </div>
-        </div>
+        </section>
     </div>
 
     <!-- 发布任务 -->
     <div class="page" id="page-publish">
-        <div class="section">
-            <div class="section-header">
-                <h2>发布任务</h2>
-                <p>创建您的需求，连接顶尖人才</p>
-            </div>
+        <div class="form-section">
             <div class="form-container">
+                <div class="form-header">
+                    <h2 class="text-headline">发布任务</h2>
+                    <p class="text-caption">创建您的需求，连接顶尖人才</p>
+                </div>
                 <form id="publish-form">
                     <div class="form-group">
                         <label>任务标题</label>
                         <input type="text" id="pub-title" placeholder="简要描述您的需求" required>
                     </div>
-                    <div class="form-group">
-                        <label>分类</label>
-                        <select id="pub-category">
-                            <option value="design">设计</option>
-                            <option value="development">开发</option>
-                            <option value="consulting">咨询</option>
-                            <option value="services">服务</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>公开摘要 (所有人可见)</label>
-                        <textarea id="pub-summary" placeholder="描述任务概况，不要包含敏感信息" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>详细描述 (加密存储)</label>
-                        <textarea id="pub-description" placeholder="详细的需求描述" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>预算范围 (CNY)</label>
-                        <div style="display: flex; gap: 1rem;">
-                            <input type="number" id="pub-budget-min" placeholder="最低" min="0" style="flex: 1;">
-                            <input type="number" id="pub-budget-max" placeholder="最高" min="0" style="flex: 1;">
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>分类</label>
+                            <select id="pub-category">
+                                <option value="design">设计</option>
+                                <option value="development">开发</option>
+                                <option value="consulting">咨询</option>
+                                <option value="services">服务</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>可见性等级</label>
+                            <select id="pub-visibility">
+                                <option value="l1">L1 公开</option>
+                                <option value="l2">L2 资格验证</option>
+                                <option value="l3">L3 邀请制</option>
+                                <option value="l4">L4 完全匿名</option>
+                            </select>
                         </div>
                     </div>
+                    
                     <div class="form-group">
-                        <label>可见性等级</label>
-                        <select id="pub-visibility">
-                            <option value="l1">L1: 公开摘要 - 所有人可见基本信息</option>
-                            <option value="l2">L2: 资格验证 - 需达标或有保证金</option>
-                            <option value="l3">L3: 邀请制 - 仅受邀者可查看</option>
-                            <option value="l4">L4: 完全匿名 - 双向匿名最高隐私</option>
-                        </select>
+                        <label>公开摘要</label>
+                        <textarea id="pub-summary" placeholder="描述任务概况，不要包含敏感信息" required></textarea>
+                        <p class="form-hint">所有人可见，不要包含敏感信息</p>
                     </div>
+                    
                     <div class="form-group">
-                        <label>
-                            <input type="checkbox" id="pub-anonymous"> 匿名发布 (使用代币标识)
-                        </label>
+                        <label>详细描述</label>
+                        <textarea id="pub-description" placeholder="详细的需求描述，仅接单人可见" required></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary" style="width: 100%;">发布任务</button>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>预算下限</label>
+                            <input type="number" id="pub-budget-min" placeholder="0" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label>预算上限</label>
+                            <input type="number" id="pub-budget-max" placeholder="0" min="0">
+                        </div>
+                    </div>
+                    
+                    <label class="checkbox-group">
+                        <input type="checkbox" id="pub-anonymous">
+                        <span class="text-caption">匿名发布（使用代币标识）</span>
+                    </label>
+                    
+                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 24px;">发布任务</button>
                 </form>
             </div>
         </div>
@@ -247,9 +918,11 @@
 
     <!-- 登录 -->
     <div class="page" id="page-login">
-        <div class="section">
+        <div class="form-section">
             <div class="form-container">
-                <h2 style="text-align: center; margin-bottom: 1.5rem;">登录</h2>
+                <div class="form-header">
+                    <h2 class="text-headline">登录</h2>
+                </div>
                 <form id="login-form">
                     <div class="form-group">
                         <label>用户名或邮箱</label>
@@ -261,18 +934,20 @@
                     </div>
                     <button type="submit" class="btn btn-primary" style="width: 100%;">登录</button>
                 </form>
-                <p style="text-align: center; margin-top: 1rem; color: var(--text-dim);">
-                    还没有账号？<a href="#" onclick="showPage('register')" style="color: var(--accent);">立即注册</a>
-                </p>
+                <div class="form-footer">
+                    <p class="text-caption">还没有账号？<a href="#" onclick="showPage('register')">立即注册</a></p>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- 注册 -->
     <div class="page" id="page-register">
-        <div class="section">
+        <div class="form-section">
             <div class="form-container">
-                <h2 style="text-align: center; margin-bottom: 1.5rem;">注册</h2>
+                <div class="form-header">
+                    <h2 class="text-headline">注册</h2>
+                </div>
                 <form id="register-form">
                     <div class="form-group">
                         <label>用户名</label>
@@ -285,346 +960,317 @@
                     <div class="form-group">
                         <label>密码</label>
                         <input type="password" id="reg-password" required minlength="8">
-                        <small style="color: var(--text-dim);">至少8位，包含大小写字母和数字</small>
+                        <p class="form-hint">至少8位，包含大小写字母和数字</p>
                     </div>
                     <button type="submit" class="btn btn-primary" style="width: 100%;">注册</button>
                 </form>
-                <p style="text-align: center; margin-top: 1rem; color: var(--text-dim);">
-                    已有账号？<a href="#" onclick="showPage('login')" style="color: var(--accent);">立即登录</a>
-                </p>
+                <div class="form-footer">
+                    <p class="text-caption">已有账号？<a href="#" onclick="showPage('login')">立即登录</a></p>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- 关于 -->
     <div class="page" id="page-about">
-        <div class="section" style="max-width: 800px; margin: 0 auto;">
-            <div class="section-header">
-                <h2>关于第二人生</h2>
-            </div>
-            <div style="background: var(--glass); border: 1px solid var(--glass-border); border-radius: 16px; padding: 2rem;">
-                <h3 style="color: var(--gold); margin-bottom: 1rem;">隐私等级说明</h3>
-                <table style="width: 100%; border-collapse: collapse; margin-bottom: 2rem;">
-                    <tr style="border-bottom: 1px solid var(--glass-border);">
-                        <td style="padding: 1rem; font-weight: bold;">L1: 公开摘要</td>
-                        <td style="padding: 1rem; color: var(--text-dim);">仅标题、标签、预算范围可见</td>
-                    </tr>
-                    <tr style="border-bottom: 1px solid var(--glass-border);">
-                        <td style="padding: 1rem; font-weight: bold;">L2: 资格验证</td>
-                        <td style="padding: 1rem; color: var(--text-dim);">需信用等级达标或缴纳保证金</td>
-                    </tr>
-                    <tr style="border-bottom: 1px solid var(--glass-border);">
-                        <td style="padding: 1rem; font-weight: bold;">L3: 邀请制</td>
-                        <td style="padding: 1rem; color: var(--text-dim);">仅受邀用户可查看详情</td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 1rem; font-weight: bold;">L4: 完全匿名</td>
-                        <td style="padding: 1rem; color: var(--text-dim);">双向匿名，平台加密通道沟通</td>
-                    </tr>
-                </table>
-                <h3 style="color: var(--gold); margin-bottom: 1rem;">核心特性</h3>
-                <ul style="color: var(--text-dim); padding-left: 1.5rem;">
-                    <li>端到端加密通讯</li>
-                    <li>资金第三方托管</li>
-                    <li>双向信用评级体系</li>
-                    <li>消息存证可追溯</li>
-                    <li>敏感信息自动脱敏</li>
-                </ul>
-            </div>
-        </div>
+        <section class="about-section">
+            <h2 class="text-headline">关于第二人生</h2>
+            <p>第二人生是一个高端任务众包平台，致力于连接企业与精英人才。我们相信，每一份需求都能找到最匹配的专家。</p>
+            <p>平台基于三大核心价值构建：</p>
+            <p><strong class="text-accent">强信任</strong> — 严格的身份验证和评价体系，确保双方可靠性。</p>
+            <p><strong class="text-accent">极致隐私</strong> — L1-L4四级隐私保护，从公开到完全匿名，满足不同场景需求。</p>
+            <p><strong class="text-accent">高质量交互</strong> — 端到端加密通讯，资金托管保障，让合作更安心。</p>
+        </section>
     </div>
 
-    <!-- 任务详情弹窗 -->
+    <!-- 任务详情模态框 -->
     <div class="modal" id="task-modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 id="modal-title">任务详情</h2>
+                <h3 class="text-title" id="modal-title">任务详情</h3>
                 <button class="modal-close" onclick="closeModal()">&times;</button>
             </div>
-            <div id="modal-body"></div>
+            <div class="modal-body" id="modal-body">
+                <!-- 动态内容 -->
+            </div>
         </div>
     </div>
 
-    <!-- Toast -->
+    <!-- Toast通知 -->
     <div class="toast" id="toast"></div>
 
+    <!-- JavaScript -->
     <script>
-        // ==================== 配置 ====================
-        // 生产环境使用Render后端
-        // 临时使用本地API，Render服务需要重新部署
-const API_BASE = 'https://secondlife-platform.onrender.com';
+        // API基础URL
+        const API_BASE = 'https://secondlife-platform.onrender.com';
         
-        // ==================== 状态管理 ====================
+        // 全局状态
         let currentUser = null;
-        let authToken = localStorage.getItem('sl_token');
+        let authToken = localStorage.getItem('token');
         
-        // ==================== 工具函数 ====================
+        // 页面切换
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById('page-' + pageId).classList.add('active');
+            window.scrollTo(0, 0);
+            
+            if (pageId === 'tasks') loadTasks();
+        }
+        
+        // 显示通知
         function showToast(message, type = 'success') {
             const toast = document.getElementById('toast');
             toast.textContent = message;
-            toast.className = `toast ${type} show`;
+            toast.className = 'toast ' + type;
+            toast.classList.add('show');
             setTimeout(() => toast.classList.remove('show'), 3000);
         }
         
-        function showPage(pageName) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById(`page-${pageName}`).classList.add('active');
-            
-            if (pageName === 'tasks') loadTasks();
-            window.scrollTo(0, 0);
+        // 模态框
+        function openModal() {
+            document.getElementById('task-modal').classList.add('active');
         }
         
         function closeModal() {
             document.getElementById('task-modal').classList.remove('active');
         }
         
+        // 更新导航状态
         function updateNav() {
             const navActions = document.getElementById('nav-actions');
-            if (currentUser) {
+            if (authToken && currentUser) {
                 navActions.innerHTML = `
-                    <span id="user-info">👤 ${currentUser.username}</span>
-                    <button class="btn btn-outline" onclick="logout()">退出</button>
+                    <span style="color: var(--text-secondary); font-size: 14px;">${currentUser.username}</span>
+                    <button class="btn btn-secondary" onclick="logout()">退出</button>
                 `;
             } else {
                 navActions.innerHTML = `
-                    <button class="btn btn-outline" onclick="showPage('login')">登录</button>
+                    <button class="btn btn-secondary" onclick="showPage('login')">登录</button>
                     <button class="btn btn-primary" onclick="showPage('register')">注册</button>
                 `;
             }
         }
         
-        // ==================== API 调用 ====================
-        async function apiCall(endpoint, options = {}) {
-            const url = `${API_BASE}${endpoint}`;
-            const config = {
-                headers: {
-                    'Content-Type': 'application/json',
-                    ...(authToken && { 'Authorization': `Bearer ${authToken}` })
-                },
-                ...options
-            };
-            
-            if (config.body && typeof config.body === 'object') {
-                config.body = JSON.stringify(config.body);
-            }
-            
+        // 获取当前用户信息
+        async function fetchCurrentUser() {
+            if (!authToken) return;
             try {
-                const response = await fetch(url, config);
-                const data = await response.json();
-                
-                if (!response.ok) {
-                    throw new Error(data.detail || '请求失败');
+                const res = await fetch(`${API_BASE}/api/user/profile`, {
+                    headers: { 'Authorization': `Bearer ${authToken}` }
+                });
+                if (res.ok) {
+                    currentUser = await res.json();
+                    updateNav();
+                } else {
+                    logout();
                 }
-                
-                return data;
-            } catch (error) {
-                showToast(error.message, 'error');
-                throw error;
+            } catch (e) {
+                console.error('获取用户信息失败:', e);
             }
         }
         
-        // ==================== 认证功能 ====================
-        document.getElementById('login-form').addEventListener('submit', async (e) => {
+        // 退出登录
+        function logout() {
+            authToken = null;
+            currentUser = null;
+            localStorage.removeItem('token');
+            updateNav();
+            showToast('已退出登录');
+            showPage('home');
+        }
+        
+        // 加载任务列表
+        async function loadTasks() {
+            const list = document.getElementById('task-list');
+            list.innerHTML = '<div style="text-align: center; padding: 80px;"><div class="loading"></div></div>';
+            
+            try {
+                const res = await fetch(`${API_BASE}/api/tasks/public`);
+                const tasks = await res.json();
+                
+                if (!tasks || tasks.length === 0) {
+                    list.innerHTML = '<p class="text-caption text-center" style="padding: 80px;">暂无公开任务</p>';
+                    return;
+                }
+                
+                list.innerHTML = tasks.map(task => `
+                    <div class="task-card" onclick="viewTask(${task.id})">
+                        <div class="task-header">
+                            <div>
+                                <div class="task-title">${escapeHtml(task.title)}</div>
+                                <div class="task-category">${task.category || '其他'}</div>
+                            </div>
+                            <div class="task-budget">¥${task.budget_max || task.budget_min || 0}</div>
+                        </div>
+                        <div class="task-summary">${escapeHtml(task.summary || '')}</div>
+                        <div class="task-meta">
+                            <span>${task.visibility_level?.toUpperCase() || 'L1'}</span>
+                            <span>${formatDate(task.created_at)}</span>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (e) {
+                list.innerHTML = '<p class="text-caption text-center" style="padding: 80px;">加载失败，请稍后重试</p>';
+            }
+        }
+        
+        // 查看任务详情
+        async function viewTask(taskId) {
+            try {
+                const res = await fetch(`${API_BASE}/api/tasks/${taskId}`);
+                const task = await res.json();
+                
+                document.getElementById('modal-title').textContent = task.title;
+                document.getElementById('modal-body').innerHTML = `
+                    <p class="text-caption mb-lg">${escapeHtml(task.summary || '')}</p>
+                    <p class="text-body mb-lg">${escapeHtml(task.description || '')}</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span class="visibility-badge">${task.visibility_level?.toUpperCase() || 'L1'}</span>
+                        <span class="text-title text-accent">¥${task.budget_max || task.budget_min || 0}</span>
+                    </div>
+                `;
+                openModal();
+            } catch (e) {
+                showToast('加载任务详情失败', 'error');
+            }
+        }
+        
+        // 转义HTML
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        // 格式化日期
+        function formatDate(dateStr) {
+            if (!dateStr) return '';
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('zh-CN');
+        }
+        
+        // 注册表单
+        document.getElementById('register-form').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const btn = e.target.querySelector('button');
+            const btn = e.target.querySelector('button[type="submit"]');
             btn.disabled = true;
             btn.innerHTML = '<div class="loading"></div>';
             
             try {
-                const data = await apiCall('/api/auth/login', {
+                const res = await fetch(`${API_BASE}/api/auth/register`, {
                     method: 'POST',
-                    body: {
-                        username: document.getElementById('login-username').value,
-                        password: document.getElementById('login-password').value
-                    }
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        username: document.getElementById('reg-username').value,
+                        email: document.getElementById('reg-email').value,
+                        password: document.getElementById('reg-password').value
+                    })
                 });
                 
-                authToken = data.access_token;
-                localStorage.setItem('sl_token', authToken);
-                currentUser = { username: document.getElementById('login-username').value };
-                updateNav();
-                showToast('登录成功');
-                showPage('tasks');
+                const data = await res.json();
+                if (res.ok) {
+                    authToken = data.access_token;
+                    localStorage.setItem('token', authToken);
+                    await fetchCurrentUser();
+                    showToast('注册成功');
+                    showPage('home');
+                } else {
+                    showToast(data.detail || '注册失败', 'error');
+                }
+            } catch (e) {
+                showToast('网络错误，请稍后重试', 'error');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = '注册';
+            }
+        });
+        
+        // 登录表单
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button[type="submit"]');
+            btn.disabled = true;
+            btn.innerHTML = '<div class="loading"></div>';
+            
+            try {
+                const formData = new FormData();
+                formData.append('username', document.getElementById('login-username').value);
+                formData.append('password', document.getElementById('login-password').value);
+                
+                const res = await fetch(`${API_BASE}/api/auth/login`, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await res.json();
+                if (res.ok) {
+                    authToken = data.access_token;
+                    localStorage.setItem('token', authToken);
+                    await fetchCurrentUser();
+                    showToast('登录成功');
+                    showPage('home');
+                } else {
+                    showToast(data.detail || '登录失败', 'error');
+                }
+            } catch (e) {
+                showToast('网络错误，请稍后重试', 'error');
             } finally {
                 btn.disabled = false;
                 btn.textContent = '登录';
             }
         });
         
-        document.getElementById('register-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const btn = e.target.querySelector('button');
-            btn.disabled = true;
-            
-            try {
-                await apiCall('/api/auth/register', {
-                    method: 'POST',
-                    body: {
-                        username: document.getElementById('reg-username').value,
-                        email: document.getElementById('reg-email').value,
-                        password: document.getElementById('reg-password').value
-                    }
-                });
-                
-                showToast('注册成功，请登录');
-                showPage('login');
-            } finally {
-                btn.disabled = false;
-            }
-        });
-        
-        function logout() {
-            authToken = null;
-            currentUser = null;
-            localStorage.removeItem('sl_token');
-            updateNav();
-            showToast('已退出登录');
-            showPage('home');
-        }
-        
-        // ==================== 任务功能 ====================
-        async function loadTasks() {
-            const container = document.getElementById('task-list');
-            container.innerHTML = '<div style="text-align: center; padding: 3rem; grid-column: 1/-1;"><div class="loading"></div></div>';
-            
-            try {
-                const tasks = await apiCall('/api/tasks');
-                
-                if (tasks.length === 0) {
-                    container.innerHTML = '<div style="text-align: center; padding: 3rem; color: var(--text-dim); grid-column: 1/-1;">暂无任务</div>';
-                    return;
-                }
-                
-                container.innerHTML = tasks.map(task => `
-                    <div class="task-card" onclick="showTaskDetail('${task.id}')">
-                        <h3>${task.title} <span class="visibility-badge">${task.visibility_level.toUpperCase()}</span></h3>
-                        <div class="task-meta">
-                            <span>👤 ${task.publisher_display}</span>
-                            <span>📁 ${task.category}</span>
-                        </div>
-                        <p style="color: var(--text-dim); font-size: 0.9rem; margin-bottom: 1rem;">${task.summary.substring(0, 100)}...</p>
-                        <div class="task-budget">${task.budget_range}</div>
-                    </div>
-                `).join('');
-            } catch (error) {
-                container.innerHTML = '<div style="text-align: center; padding: 3rem; color: var(--text-dim); grid-column: 1/-1;">加载失败，请稍后重试</div>';
-            }
-        }
-        
-        async function showTaskDetail(taskId) {
-            const modal = document.getElementById('task-modal');
-            const body = document.getElementById('modal-body');
-            
-            body.innerHTML = '<div style="text-align: center; padding: 2rem;"><div class="loading"></div></div>';
-            modal.classList.add('active');
-            
-            try {
-                const task = await apiCall(`/api/tasks/${taskId}`);
-                
-                let contentHtml = `
-                    <div style="margin-bottom: 1.5rem;">
-                        <span class="visibility-badge">${task.visibility_level.toUpperCase()}</span>
-                        <span style="color: var(--text-dim); margin-left: 0.5rem;">${task.category}</span>
-                    </div>
-                    <p style="color: var(--text-dim); margin-bottom: 1.5rem;">${task.summary}</p>
-                    <div style="background: var(--glass); padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;">
-                        <div style="font-size: 1.5rem; color: var(--gold); font-weight: bold;">${task.budget_range}</div>
-                        <div style="color: var(--text-dim); font-size: 0.9rem;">预算范围</div>
-                    </div>
-                `;
-                
-                if (task.can_view_full) {
-                    contentHtml += `
-                        <div style="margin-bottom: 1.5rem;">
-                            <h4 style="color: var(--gold); margin-bottom: 0.5rem;">详细描述</h4>
-                            <p>${task.description || '暂无详细描述'}</p>
-                        </div>
-                        ${authToken ? `
-                            <button class="btn btn-primary" onclick="acceptTask('${taskId}')" style="width: 100%;">
-                                接受任务
-                            </button>
-                        ` : '<p style="color: var(--text-dim); text-align: center;">登录后可接受任务</p>'}
-                    `;
-                } else {
-                    contentHtml += `
-                        <div style="background: rgba(233, 69, 96, 0.1); border: 1px solid var(--accent); border-radius: 8px; padding: 1rem; margin-bottom: 1.5rem;">
-                            <p style="color: var(--accent); margin-bottom: 0.5rem;">🔒 此任务需要解锁才能查看完整内容</p>
-                            <ul style="color: var(--text-dim); font-size: 0.9rem; padding-left: 1.5rem;">
-                                ${task.unlock_requirements?.min_level ? `<li>需要信用等级 ≥ ${task.unlock_requirements.min_level}</li>` : ''}
-                                ${task.unlock_requirements?.need_deposit ? '<li>需要缴纳保证金</li>' : ''}
-                            </ul>
-                        </div>
-                    `;
-                }
-                
-                body.innerHTML = contentHtml;
-            } catch (error) {
-                body.innerHTML = '<p style="color: var(--accent); text-align: center;">加载任务详情失败</p>';
-            }
-        }
-        
-        async function acceptTask(taskId) {
-            try {
-                await apiCall(`/api/tasks/${taskId}/accept`, { method: 'POST' });
-                showToast('任务接受成功');
-                closeModal();
-                loadTasks();
-            } catch (error) {
-                // 错误已在 apiCall 中显示
-            }
-        }
-        
-        // ==================== 发布任务 ====================
+        // 发布任务表单
         document.getElementById('publish-form').addEventListener('submit', async (e) => {
             e.preventDefault();
-            
             if (!authToken) {
                 showToast('请先登录', 'error');
                 showPage('login');
                 return;
             }
             
-            const btn = e.target.querySelector('button');
+            const btn = e.target.querySelector('button[type="submit"]');
             btn.disabled = true;
+            btn.innerHTML = '<div class="loading"></div>';
             
             try {
-                await apiCall('/api/tasks', {
+                const res = await fetch(`${API_BASE}/api/tasks/`, {
                     method: 'POST',
-                    body: {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authToken}`
+                    },
+                    body: JSON.stringify({
                         title: document.getElementById('pub-title').value,
                         category: document.getElementById('pub-category').value,
                         summary: document.getElementById('pub-summary').value,
                         description: document.getElementById('pub-description').value,
-                        budget_min: parseFloat(document.getElementById('pub-budget-min').value),
-                        budget_max: parseFloat(document.getElementById('pub-budget-max').value),
+                        budget_min: parseInt(document.getElementById('pub-budget-min').value) || 0,
+                        budget_max: parseInt(document.getElementById('pub-budget-max').value) || 0,
                         visibility_level: document.getElementById('pub-visibility').value,
-                        publisher_anonymous: document.getElementById('pub-anonymous').checked
-                    }
+                        is_anonymous: document.getElementById('pub-anonymous').checked
+                    })
                 });
                 
-                showToast('任务发布成功');
-                e.target.reset();
-                showPage('tasks');
+                const data = await res.json();
+                if (res.ok) {
+                    showToast('任务发布成功');
+                    e.target.reset();
+                    showPage('tasks');
+                } else {
+                    showToast(data.detail || '发布失败', 'error');
+                }
+            } catch (e) {
+                showToast('网络错误，请稍后重试', 'error');
             } finally {
                 btn.disabled = false;
+                btn.textContent = '发布任务';
             }
         });
         
-        // ==================== 初始化 ====================
+        // 初始化
         document.addEventListener('DOMContentLoaded', () => {
-            updateNav();
-            
-            // 检查登录状态
-            if (authToken) {
-                // 可以添加 token 验证逻辑
-                currentUser = { username: '用户' };
-                updateNav();
-            }
-        });
-        
-        // 点击模态框外部关闭
-        document.getElementById('task-modal').addEventListener('click', (e) => {
-            if (e.target.id === 'task-modal') closeModal();
+            fetchCurrentUser();
         });
     </script>
 </body>

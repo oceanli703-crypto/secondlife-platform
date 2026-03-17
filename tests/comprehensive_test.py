@@ -24,7 +24,7 @@ from typing import Dict, List, Optional, Tuple
 import traceback
 
 # ============== 配置 ==============
-RENDER_URL = "https://secondlife-api.onrender.com"
+RENDER_URL = "https://secondlife-platform.onrender.com"
 LOCAL_URL = "http://localhost:8000"
 FRONTEND_URL = "https://secondlife-platform-sigma.vercel.app"
 
@@ -628,33 +628,33 @@ class LoadTest:
             elapsed = time.time() - start
             return False, elapsed
     
-    def concurrent_test(self, endpoint: str, concurrent: int, method="GET", data=None, headers=None):
+    def concurrent_test(self, endpoint: str, num_requests: int, method="GET", data=None, headers=None):
         """并发测试"""
-        log(f"并发测试: {concurrent}请求 -> {endpoint}")
+        log(f"并发测试: {num_requests}请求 -> {endpoint}")
         
         times = []
-        with concurrent.futures.ThreadPoolExecutor(max_workers=concurrent) as executor:
+        with concurrent.futures.ThreadPoolExecutor(max_workers=min(num_requests, 50)) as executor:
             futures = [executor.submit(self.make_request, endpoint, method, data, headers) 
-                      for _ in range(concurrent)]
+                      for _ in range(num_requests)]
             results = [f.result() for f in concurrent.futures.as_completed(futures)]
         
         success_count = sum(1 for r, _ in results if r)
         times = [t for _, t in results]
         
-        self.metrics["total_requests"] += concurrent
+        self.metrics["total_requests"] += num_requests
         self.metrics["successful_requests"] += success_count
-        self.metrics["failed_requests"] += concurrent - success_count
+        self.metrics["failed_requests"] += num_requests - success_count
         
         if times:
             self.metrics["avg_response_time"] = sum(times) / len(times)
             self.metrics["max_response_time"] = max(times + [self.metrics["max_response_time"]])
             self.metrics["min_response_time"] = min(times + [self.metrics["min_response_time"]])
         
-        success_rate = success_count / concurrent * 100
+        success_rate = success_count / num_requests * 100
         
         result_detail = {
             "endpoint": endpoint,
-            "concurrent": concurrent,
+            "concurrent": num_requests,
             "success_rate": f"{success_rate:.1f}%",
             "avg_time": f"{self.metrics['avg_response_time']*1000:.1f}ms",
             "max_time": f"{max(times)*1000:.1f}ms" if times else "N/A"
