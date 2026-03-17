@@ -584,6 +584,20 @@ async def rate_task(
 
 # ==================== 健康检查 ====================
 
+@app.get("/api/user/profile")
+async def get_user_profile(current_user: User = Depends(get_current_user)):
+    """获取当前用户信息"""
+    return {
+        "id": current_user.id,
+        "username": current_user.username,
+        "email": current_user.email,
+        "credit_score": current_user.credit_score,
+        "credit_level": current_user.credit_level,
+        "deposit_status": current_user.deposit_status,
+        "is_active": current_user.is_active,
+        "created_at": current_user.created_at.isoformat() if current_user.created_at else None
+    }
+
 @app.get("/health")
 async def health_check():
     return {"status": "healthy", "timestamp": datetime.utcnow().isoformat()}
